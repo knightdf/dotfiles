@@ -18,19 +18,24 @@ Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-rails.git'
+Bundle 'scrooloose/nerdtree'
+Bundle 'fholgado/minibufexpl.vim'
+Bundle 'Valloric/YouCompleteMe'
 " " The sparkup vim script is in a subdirectory of this repo called vim.
 " " Pass the path to set the runtimepath properly.
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 " " scripts from http://vim-scripts.org/vim/scripts.html
 Bundle 'L9'
 Bundle 'FuzzyFinder'
+Bundle 'taglist.vim'
+Bundle 'winmanager'
 " " scripts not on GitHub
 Bundle 'git://git.wincent.com/command-t.git'
 " " git repos on your local machine (i.e. when working on your own plugin)
 "Bundle 'file:///home/gmarik/path/to/plugin'
 " " ...
 "
-" filetype plugin indent on     " required
+ filetype plugin indent on     " required
 " "
 " " Brief help
 " " :BundleList          - list configured bundles
@@ -47,8 +52,12 @@ Bundle 'git://git.wincent.com/command-t.git'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""   
 " GVIM自身的设置  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
+if has('gui_running')
+	colorscheme torte	"solarized,desert,torte  主题颜色
+else
+	"colorscheme torte	"solarized,desert  主题颜色
+endif
 language messages zh_CN.utf-8	  " 解决consle输出乱码 
-colorscheme	desert	"solarized  " 主题颜色
 "set background=dark		"背景色
 set t_Co=256			"256色
 set guioptions-=T       " 隐藏工具栏  
@@ -102,8 +111,8 @@ set encoding=utf-8      " 设置vim的工作编码为utf-8，如果源文件不�
 set fileencoding=utf-8      " 让vim新建文件和保存文件使用utf-8编码  
 set fileencodings=utf-8,gbk,gb18030,cp936,latin-1     "打开文件的时候进行解码的猜测列表 
 "filetype on                  " 侦测文件类型  
-filetype indent on               " 针对不同的文件类型采用不同的缩进格式  
-filetype plugin on               " 针对不同的文件类型加载对应的插件 
+"filetype indent on               " 针对不同的文件类型采用不同的缩进格式  
+"filetype plugin on               " 针对不同的文件类型加载对应的插件 
 syntax enable
 syntax on                    " 语法高亮  
 cd /home/ray/Code             " 默认保存路径
@@ -132,14 +141,16 @@ func! RunCode()
         exec "!java -classpath %:h; %:t:r"  
     endif  
 endfunc  
-   
-" F5 保存+编译  
-map <F5> :call CompileCode()<CR>  
-  
-"  F6 运行  
-map <F6> :call RunCode()<CR>  
-  
-  
+
+function! NERDTree_Start()  
+	exec 'NERDTree'  
+endfunction  
+
+function! NERDTree_IsValid()  
+	return 1  
+endfunction  
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
 " 实用功能  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
@@ -148,13 +159,35 @@ set foldenable           " 打开代码折叠
 set foldmethod=syntax        " 选择代码折叠类型  
 set foldlevel=100            " 禁止自动折叠  
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc':'zo')<CR>   
-  
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
+" 快捷键  
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
+nmap <F2> :NERDTreeToggle <CR>
+nmap <F3> :Tlist <CR>
+nmap <F4> :WMToggle <CR>
+" F5 保存+编译  
+map <F5> :call CompileCode()<CR>  
+"  F6 运行  
+map <F6> :call RunCode()<CR> 
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
 " 插件  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
-  
 " MiniBufExplorer       
 let g:miniBufExplMapWindowNavVim = 1   
 let g:miniBufExplMapWindowNavArrows = 1   
 let g:miniBufExplMapCTabSwitchBufs = 1   
 let g:miniBufExplModSelTarget = 1   
+" tablist
+let Tlist_Show_One_File=1  
+let Tlist_Exit_OnlyWindow=1  
+" NERDTree
+let g:NERDTree_title="[NERDTree]"  
+" winManager
+let g:winManagerWindowLayout="NERDTree|TagList" 
+" YCM
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+let g:EclimCompletionMethod = 'omnifunc'
