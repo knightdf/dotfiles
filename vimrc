@@ -21,6 +21,15 @@ Bundle 'tpope/vim-rails.git'
 Bundle 'scrooloose/nerdtree'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'Valloric/YouCompleteMe'
+Bundle 'ervandew/supertab'
+Bundle 'scrooloose/syntastic'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'davidhalter/jedi'
+Bundle 'xolox/vim-lua-ftplugin'
+Bundle 'xolox/vim-misc'
+Bundle 'kien/ctrlp.vim'
+Bundle 'elzr/vim-json'
+Bundle 'bling/vim-airline'
 " " The sparkup vim script is in a subdirectory of this repo called vim.
 " " Pass the path to set the runtimepath properly.
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -55,7 +64,12 @@ Bundle 'git://git.wincent.com/command-t.git'
 if has('gui_running')
 	colorscheme torte	"solarized,desert,torte  主题颜色
 else
-	"colorscheme torte	"solarized,desert  主题颜色
+    set background=dark		"背景色
+	let g:solarized_termcolors= 16
+	let g:solarized_termtrans=1
+	let g:solarized_contrast="normal"
+	let g:solarized_visibility="normal"
+	colorscheme solarized "solarized,desert  主题颜色
 endif
 language messages zh_CN.utf-8	  " 解决consle输出乱码 
 "set background=dark		"背景色
@@ -80,15 +94,17 @@ set keymodel=startsel,stopsel   "使用“Shift + 方向键”选择文本,否�
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""   
 " 文本格式和排版   
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""   
-set list			    " 显示Tab符，->  
-set listchars=tab:\ \   " 使用一高亮竖线代替  
+"set list			    " 显示Tab符，->  
+"set listchars=tab:\ \   " 使用一高亮竖线代替  
+set listchars=tab:›\ ,trail:•,extends:#,nbsp:. 
 set tabstop=4           " 制表符为4  
 set autoindent          " 自动对齐（继承前一行的缩进方式）  
 set smartindent         " 智能自动缩进（以c程序的方式）  
 set softtabstop=4		" 敲入tab键时实际占有的列数
 set shiftwidth=4        " 换行时行间交错使用4个空格  
-set noexpandtab         " 不要用空格代替制表符  
-set cindent		        " 使用C样式的缩进  
+"set noexpandtab        " 不要用空格代替制表符  
+set expandtab			" 用空格代替制表符  
+set cindent			    " 使用C样式的缩进  
 set smarttab            " 在行和段开始处使用制表符  
 set nowrap              " 不要换行,显示一行   
 "set ambiwidth=double	" Unicode中,防止特殊符号无法正常显示,使用宽字符 
@@ -115,7 +131,7 @@ set fileencodings=utf-8,gbk,gb18030,cp936,latin-1     "打开文件的时候进�
 "filetype plugin on               " 针对不同的文件类型加载对应的插件 
 syntax enable
 syntax on                    " 语法高亮  
-cd /home/ray/Code             " 默认保存路径
+"cd /home/ray/Code             " 默认保存路径,会影响默认工作路径
   
   
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
@@ -160,10 +176,22 @@ set foldmethod=syntax        " 选择代码折叠类型
 set foldlevel=100            " 禁止自动折叠  
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc':'zo')<CR>   
 
+"remember last update or view postion"
+" Only do this part when compiled with support for autocommands 
+if has("autocmd")
+    " In text files, always limit the width of text to 78 characters 
+    autocmd BufRead *.txt set tw=78
+    " When editing a file, always jump to the last cursor position 
+    autocmd BufReadPost *
+                \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+                \ exe "normal g'\"" |
+                \ endif 
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
 " 快捷键  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
+let mapleader=','	 "定义<leader>键
 nmap <F2> :NERDTreeToggle <CR>
 nmap <F3> :Tlist <CR>
 nmap <F4> :WMToggle <CR>
@@ -171,7 +199,13 @@ nmap <F4> :WMToggle <CR>
 map <F5> :call CompileCode()<CR>  
 "  F6 运行  
 map <F6> :call RunCode()<CR> 
-
+nnoremap <leader>1 :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>2 :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>3 :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" format json
+"au FileType json setlocal equalprg=python3\ -m\ json.tool
+" format json
+map <F8> <ESC>:%!python3 -m json.tool<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
 " 插件  
@@ -188,6 +222,30 @@ let Tlist_Exit_OnlyWindow=1
 let g:NERDTree_title="[NERDTree]"  
 " winManager
 let g:winManagerWindowLayout="NERDTree|TagList" 
-" YCM
+" YouCompleteMe
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_error_symbol = '>>'
+let g:ycm_warning_symbol = '>*'
+" eclim, this setting is set to work with YouCompleteMe
 let g:EclimCompletionMethod = 'omnifunc'
+" supertab
+let g:SuperTabDefaultCompletionType="context"
+" vim-airline
+let g:airline_theme='badwolf'
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
