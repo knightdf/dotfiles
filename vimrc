@@ -38,6 +38,7 @@ Bundle 'L9'
 Bundle 'FuzzyFinder'
 Bundle 'taglist.vim'
 Bundle 'winmanager'
+Bundle 'DoxygenToolkit.vim'
 " " scripts not on GitHub
 Bundle 'git://git.wincent.com/command-t.git'
 " " git repos on your local machine (i.e. when working on your own plugin)
@@ -249,3 +250,11 @@ let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.paste = 'Þ'
 let g:airline_symbols.paste = '∥'
 let g:airline_symbols.whitespace = 'Ξ'
+
+"DoxygenToolkit
+let g:DoxygenToolkit_briefTag_pre="@Synopsis  "
+let g:DoxygenToolkit_paramTag_pre="@Param "
+let g:DoxygenToolkit_returnTag="@Returns   "
+let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
+let g:DoxygenToolkit_blockFooter="--------------------------------------------------------------------------"
+let g:DoxygenToolkit_authorName="Ray/rayydl@gmail.com"
