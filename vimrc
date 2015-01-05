@@ -63,18 +63,18 @@ Bundle 'git://git.wincent.com/command-t.git'
 " GVIM自身的设置  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
 if has('gui_running')
-	colorscheme torte	"solarized,desert,torte  主题颜色
+    colorscheme torte    "solarized,desert,torte  主题颜色
 else
-    set background=dark		"背景色
-	let g:solarized_termcolors= 16
-	let g:solarized_termtrans=1
-	let g:solarized_contrast="normal"
-	let g:solarized_visibility="normal"
-	colorscheme solarized "solarized,desert  主题颜色
+    set background=dark        "背景色
+    let g:solarized_termcolors= 16
+    let g:solarized_termtrans=1
+    let g:solarized_contrast="normal"
+    let g:solarized_visibility="normal"
+    colorscheme solarized "solarized,desert  主题颜色
 endif
-language messages zh_CN.utf-8	  " 解决consle输出乱码 
-"set background=dark		"背景色
-set t_Co=256			"256色
+language messages zh_CN.utf-8      " 解决consle输出乱码 
+"set background=dark        "背景色
+set t_Co=256            "256色
 set guioptions-=T       " 隐藏工具栏  
 set guifont=Monaco\ 10          " 字体 && 字号  
 set noerrorbells        " 关闭错误提示音  
@@ -87,7 +87,7 @@ set mouse=a             " 可以在buffer的任何地方 ->
 set selection=exclusive         " 使用鼠标（类似office中 ->  
 set selectmode=mouse,key        " 在工作区双击鼠标定位）  
 set cursorline                  " 突出显示当前行  
-set nu					 " 显示行号  
+set nu                     " 显示行号  
 set whichwrap+=<,>,h,l        " 允许backspace和光标键跨越行边界   
 set completeopt=longest,menu    "按Ctrl+N进行代码补全  
 set keymodel=startsel,stopsel   "使用“Shift + 方向键”选择文本,否则代表向指定方向跳一个单词 
@@ -95,21 +95,20 @@ set keymodel=startsel,stopsel   "使用“Shift + 方向键”选择文本,否�
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""   
 " 文本格式和排版   
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""   
-"set list			    " 显示Tab符，->  
-"set listchars=tab:\ \   " 使用一高亮竖线代替  
+set list                " 显示Tab符，->  
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. 
 set tabstop=4           " 制表符为4  
 set autoindent          " 自动对齐（继承前一行的缩进方式）  
 set smartindent         " 智能自动缩进（以c程序的方式）  
-set softtabstop=4		" 敲入tab键时实际占有的列数
+set softtabstop=4        " 敲入tab键时实际占有的列数
 set shiftwidth=4        " 换行时行间交错使用4个空格  
 "set noexpandtab        " 不要用空格代替制表符  
-set expandtab			" 用空格代替制表符  
-set cindent			    " 使用C样式的缩进  
+set expandtab            " 用空格代替制表符  
+set cindent                " 使用C样式的缩进  
 set smarttab            " 在行和段开始处使用制表符  
 set nowrap              " 不要换行,显示一行   
-"set ambiwidth=double	" Unicode中,防止特殊符号无法正常显示,使用宽字符 
-set selection=inclusive	"指定在选择文本时，光标所在位置也属于被选中的范围。如果指定 selection=exclusive 的话，可能会出现某些文本无法被选中的情况。   
+"set ambiwidth=double    " Unicode中,防止特殊符号无法正常显示,使用宽字符 
+set selection=inclusive    "指定在选择文本时，光标所在位置也属于被选中的范围。如果指定 selection=exclusive 的话，可能会出现某些文本无法被选中的情况。   
 set selectmode=mouse,key
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
@@ -160,11 +159,11 @@ func! RunCode()
 endfunc  
 
 function! NERDTree_Start()  
-	exec 'NERDTree'  
+    exec 'NERDTree'  
 endfunction  
 
 function! NERDTree_IsValid()  
-	return 1  
+    return 1  
 endfunction  
 
 
@@ -192,7 +191,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
 " 快捷键  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
-let mapleader=','	 "定义<leader>键
+let mapleader=','     "定义<leader>键
 nmap <F2> :NERDTreeToggle <CR>
 nmap <F3> :Tlist <CR>
 nmap <F4> :WMToggle <CR>
@@ -228,7 +227,7 @@ let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extr
 let g:ycm_error_symbol = '>>'
 let g:ycm_warning_symbol = '>*'
 " eclim, this setting is set to work with YouCompleteMe
-let g:EclimCompletionMethod = 'omnifunc'
+"let g:EclimCompletionMethod = 'omnifunc'
 " supertab
 let g:SuperTabDefaultCompletionType="context"
 " vim-airline
@@ -255,6 +254,6 @@ let g:airline_symbols.whitespace = 'Ξ'
 let g:DoxygenToolkit_briefTag_pre="@Synopsis  "
 let g:DoxygenToolkit_paramTag_pre="@Param "
 let g:DoxygenToolkit_returnTag="@Returns   "
-let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
-let g:DoxygenToolkit_blockFooter="--------------------------------------------------------------------------"
+"let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
+"let g:DoxygenToolkit_blockFooter="--------------------------------------------------------------------------"
 let g:DoxygenToolkit_authorName="Ray/rayydl@gmail.com"

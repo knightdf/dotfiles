@@ -92,7 +92,6 @@ export PATH=${JAVA_HOME}/bin:$PATH
 alias goagent='cd /opt/goagent/local&&python proxy.py'
 alias youdao='cd /home/ray/Code/lua&&lua youdao.lua'
 alias eclimd='/opt/eclipse/eclimd 2>&1 1>/dev/null &'
-
 export LUA_PATH='/usr/local/share/lua/5.1/?.lua;?.lua;/home/ray/Code/bilin/rtb/src/lua/?.lua;;'
 export LUA_CPATH='/usr/local/lib/lua/5.1/?.so;?.so;/home/ray/Code/bilin/rtb/lib/?.so;;'
 export NGINX_HOME=/usr/local/nginx
@@ -104,3 +103,11 @@ export PATH=$M2_HOME/bin:$PATH
 
 export ANDROID_HOME=/home/ray/android/sdks
 export PATH=${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:$PATH
+
+export GRADLE_HOME=/usr/local/gradle
+export PATH=${GRADLE_HOME}/bin:$PATH
+
+#GNUStep for complie object-c
+GNUSTEP_MAKEFILES=/usr/share/GNUstep.sh
+export GNUSTEP_MAKEFILES
+source /usr/share/GNUstep/Makefiles/GNUstep.sh
