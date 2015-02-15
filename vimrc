@@ -110,6 +110,7 @@ set nowrap              " 不要换行,显示一行
 "set ambiwidth=double    " Unicode中,防止特殊符号无法正常显示,使用宽字符 
 set selection=inclusive    "指定在选择文本时，光标所在位置也属于被选中的范围。如果指定 selection=exclusive 的话，可能会出现某些文本无法被选中的情况。   
 set selectmode=mouse,key
+set backspace=indent,eol,start      "解决退格键不能用得问题
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
 " 状态行(命令行)的显示  
