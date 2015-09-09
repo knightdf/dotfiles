@@ -21,7 +21,7 @@ Bundle 'tpope/vim-rails.git'
 Bundle 'scrooloose/nerdtree'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'Valloric/YouCompleteMe'
-Bundle 'ervandew/supertab'
+"Bundle 'ervandew/supertab'
 Bundle 'scrooloose/syntastic'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'sickill/vim-monokai'
@@ -31,6 +31,7 @@ Bundle 'xolox/vim-misc'
 Bundle 'kien/ctrlp.vim'
 Bundle 'elzr/vim-json'
 Bundle 'bling/vim-airline'
+Bundle 'derekwyatt/vim-scala'
 " " The sparkup vim script is in a subdirectory of this repo called vim.
 " " Pass the path to set the runtimepath properly.
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -84,7 +85,7 @@ set linespace=0         " 字符间插入的像素行数目
 set shortmess=atI       " 启动的时候不显示那个援助索马里儿童的提示  
 "set novisualbell        " 不要闪烁   
 set scrolloff=3         " 光标移动到buffer的顶部和底部时保持3行距离  
-set mouse=a             " 可以在buffer的任何地方 ->  
+set mouse=v             " 可以在buffer的任何地方 ->  
 set selection=exclusive         " 使用鼠标（类似office中 ->  
 set selectmode=mouse,key        " 在工作区双击鼠标定位）  
 set cursorline                  " 突出显示当前行  
@@ -231,7 +232,7 @@ let g:ycm_warning_symbol = '>*'
 " eclim, this setting is set to work with YouCompleteMe
 "let g:EclimCompletionMethod = 'omnifunc'
 " supertab
-let g:SuperTabDefaultCompletionType="context"
+"let g:SuperTabDefaultCompletionType="context"
 " vim-airline
 let g:airline_theme='badwolf'
 
