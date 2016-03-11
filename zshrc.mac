@@ -46,25 +46,27 @@ ZSH_THEME="pygmalion"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git osx mvn)
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 export CLICOLOR=1
-# export MANPATH="/usr/local/man:$MANPATH"
+export MANPATH="/usr/local/man:$MANPATH"
+export TERM="xterm-256color"
 
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='vim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -85,13 +87,26 @@ source $ZSH/oh-my-zsh.sh
 #alias vimdiff="/usr/local/bin/vimdiff"
 alias tailf="tail -f"
 alias vi="vim"
-alias ldd="otool"
+alias ldd="otool -L"
+
+export HOMEBREW_GITHUB_API_TOKEN="9223c0658d1388e75f3310289e94fb3afd55b67a"
+
+# coreutils
+#if brew list | grep coreutils > /dev/null ; then
+export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
+alias ls='ls -F --show-control-chars --color=auto'
+eval `gdircolors -b $HOME/.dir_colors`
+#fi
 
 # java
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home
 export JRE_HOME=$JAVA_HOME/jre
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib:$CLASSPATH
 export PATH=$PATH:$JAVA_HOME/bin
+
+# scala, for IDEA
+export SCALA_HOME=/usr/local/opt/scala/idea
 
 # nginx
 export NGINX_HOME=/usr/local/nginx
@@ -109,9 +124,24 @@ export PATH=$PATH:$MYSQL_HOME/bin
 export MVN_HOME=/usr/local/maven
 export PATH=$PATH:$MVN_HOME/bin
 
+# spark
+export SPARK_HOME=/Users/Ray/Applications/spark-1.5.0
+export PATH=$PATH:$SPARK_HOME/bin
+
+# playframework
+export ACTIVATOR_HOME=/Users/Ray/Applications/activator-1.3.7-minimal
+export PATH=$PATH:$ACTIVATOR_HOME
+
 # youdao dict
-alias youdao="lua /Users/Ray/Code/lua/youdao.lua"
+alias youdao="lua /opt/scripts/youdao.lua"
 
 # lua path and cpath
 export LUA_PATH="./?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;/usr/local/lib/lua/5.1/?.lua;/usr/local/lib/lua/5.1/?/init.lua;;"
 export LUA_CPATH="./?.so;/usr/local/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/loadall.so;;"
+
+# python virtualenv
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
+
+# savReaderWriter(python library)
+export DYLD_LIBRARY_PATH=.:$DYLD_LIBRARY_PATH:/Library/Python/2.7/site-packages/savReaderWriter/spssio/macos
