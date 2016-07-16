@@ -35,6 +35,8 @@ Plugin 'derekwyatt/vim-scala'
 Plugin 'othree/xml.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'artur-shaik/vim-javacomplete2'
 " " The sparkup vim script is in a subdirectory of this repo called vim.
 " " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -121,6 +123,10 @@ set nowrap              " 不要换行,显示一行
 set selection=inclusive    "指定在选择文本时，光标所在位置也属于被选中的范围。如果指定 selection=exclusive 的话，可能会出现某些文本无法被选中的情况。
 set selectmode=mouse,key        " 在工作区双击鼠标定位）
 set backspace=indent,eol,start      "解决退格键不能用得问题
+" set tab=2 in yaml, scala, ...
+autocmd FileType yaml,scala set sw=2
+autocmd FileType yaml,scala set ts=2
+autocmd FileType yaml,scala set sts=2
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 状态行(命令行)的显示
@@ -143,7 +149,8 @@ set fileencodings=utf-8,gbk,gb18030,cp936,latin-1     "打开文件的时候进�
 syntax enable
 syntax on                    " 语法高亮
 "cd /home/ray/Code             " 默认保存路径,会影响默认工作路径
-
+autocmd FileType crontab setlocal backupcopy=yes    " solve vi/vim editing crontab in osx problem
+autocmd FileType java setlocal omnifunc=javacomplete#Complete   " vim-javacomplete2
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 查找
@@ -165,7 +172,7 @@ func! CompileCode()
 endfunc
 func! RunCode()
     if &filetype == "java"
-        exec "!java -classpath %:h; %:t:r"
+        exec "!java -classpath %:p:h %:t:r"
     endif
 endfunc
 
@@ -210,13 +217,19 @@ nmap <F4> :WMToggle<CR>
 map <F5> :call CompileCode()<CR>
 "  F6 运行
 map <F6> :call RunCode()<CR>
+" ask for import option
+nmap <F7> <Plug>(JavaComplete-Imports-Add)
+imap <F7> <Plug>(JavaComplete-Imports-Add)
+" add all missing imports
+nmap <F8> <Plug>(JavaComplete-Imports-AddMissing)
+imap <F8> <Plug>(JavaComplete-Imports-AddMissing)
 nnoremap <leader>1 :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>2 :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>3 :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " format json
 "au FileType json setlocal equalprg=python3\ -m\ json.tool
 " format json
-map <F8> <ESC>:%!python3 -m json.tool<CR>
+map <F9> <ESC>:%!python3 -m json.tool<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 插件
@@ -240,11 +253,14 @@ let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/
 let g:ycm_error_symbol = '>>'
 let g:ycm_warning_symbol = '>*'
 " eclim, this setting is set to work with YouCompleteMe
-let g:EclimCompletionMethod = 'omnifunc'
+"let g:EclimCompletionMethod = 'omnifunc'
 " supertab
 "let g:SuperTabDefaultCompletionType="context"
 " vim-airline
 let g:airline_theme='badwolf'
+" vim-lua, enable omni completion
+let g:lua_complete_omni = 1
+let g:lua_safe_omni_modules = 1
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -264,9 +280,9 @@ let g:airline_symbols.paste = '∥'
 let g:airline_symbols.whitespace = 'Ξ'
 
 "DoxygenToolkit
-let g:DoxygenToolkit_briefTag_pre="@synopsis "
-let g:DoxygenToolkit_paramTag_pre="@param "
-let g:DoxygenToolkit_returnTag="@return "
+let g:DoxygenToolkit_briefTag_pre="@Synopsis "
+let g:DoxygenToolkit_paramTag_pre="@Param "
+let g:DoxygenToolkit_returnTag="@Return "
 "let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
 "let g:DoxygenToolkit_blockFooter="--------------------------------------------------------------------------"
 let g:DoxygenToolkit_authorName="Ray/rayydl@gmail.com"
