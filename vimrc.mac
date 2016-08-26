@@ -73,7 +73,7 @@ filetype plugin indent on     " required
 "set nocompatible "不要使用vi的键盘模式，而是vim自己的
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" GVIM自身的设置
+" 主题设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has('gui_running')
     colorscheme torte    "solarized,desert,torte  主题颜色
@@ -85,6 +85,10 @@ else
     let g:solarized_visibility="normal"
     colorscheme solarized   "solarized,desert,monokai  主题颜色
 endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 文本格式和排版
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 language messages zh_CN.utf-8      " 解决consle输出乱码
 "set background=dark        "背景色
 set t_Co=256            "256色
@@ -97,16 +101,11 @@ set linespace=0         " 字符间插入的像素行数目
 set shortmess=atI       " 启动的时候不显示那个援助索马里儿童的提示
 set scrolloff=3         " 光标移动到buffer的顶部和底部时保持3行距离
 set mouse=v             " 可以在buffer的任何地方 ->
-set selection=exclusive         " 使用鼠标（类似office中 ->
 set cursorline                  " 突出显示当前行
 set nu                     " 显示行号
 set whichwrap+=<,>,h,l        " 允许backspace和光标键跨越行边界
 set completeopt=longest,menu    "按Ctrl+N进行代码补全
 set keymodel=startsel,stopsel   "使用“Shift + 方向键”选择文本,否则代表向指定方向跳一个单词
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 文本格式和排版
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set list                " 显示Tab符，->
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
 set autoindent          " 自动对齐（继承前一行的缩进方式）

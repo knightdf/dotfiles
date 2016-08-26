@@ -49,6 +49,8 @@ ZSH_THEME="pygmalion"
 plugins=(git osx mvn)
 
 # User configuration
+# zsh dumps
+setopt HIST_IGNORE_ALL_DUPS
 
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 export CLICOLOR=1
@@ -90,7 +92,7 @@ alias vi="vim"
 alias ldd="otool -L"
 alias less="less -M"
 
-export HOMEBREW_GITHUB_API_TOKEN="6fb01cf679af496aaeaa98c18b78728a5c80dbf8"
+export HOMEBREW_GITHUB_API_TOKEN=""
 
 # coreutils, gnu-sed
 #if brew list | grep coreutils > /dev/null ; then
@@ -132,8 +134,14 @@ export PATH=$PATH:$MYSQL_HOME/bin
 export MVN_HOME=/usr/local/maven
 export PATH=$PATH:$MVN_HOME/bin
 
+# hadoop
+export HADOOP_HOME=/Users/Ray/Applications/hadoop-2.7.2
+export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+export PATH=$PATH:$HADOOP_HOME/bin
+
 # spark
-export SPARK_HOME=/Users/Ray/Applications/spark-1.5.0
+export SPARK_HOME=/Users/Ray/Applications/spark-2.0.0-bin-hadoop2.7
+export LD_LIBRARY_PATH=$HADOOP_COMMON_LIB_NATIVE_DIR:$LD_LIBRARY_PATH
 export PATH=$PATH:$SPARK_HOME/bin
 
 # playframework
@@ -156,9 +164,13 @@ source /usr/local/bin/virtualenvwrapper.sh
 
 # aws cli completion
 source /usr/local/share/zsh/site-functions/_aws
-
+# docker completion
+source /usr/local/share/zsh/site-functions/_docker
 # hexo completion
-eval "$(hexo --completion=zsh)"
+#eval "$(hexo --completion=zsh)"
+
+# autojump
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 # savReaderWriter(python library)
 export DYLD_LIBRARY_PATH=.:$DYLD_LIBRARY_PATH:/Library/Python/2.7/site-packages/savReaderWriter/spssio/macos
