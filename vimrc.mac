@@ -14,12 +14,14 @@ Plugin 'VundleVim/Vundle.vim'
 " " The following are examples of different formats supported.
 " " Keep Plugin commands between vundle#begin/end.
 " " scripts on GitHub repos
+Plugin 'tpope/vim-obsession'
 Plugin 'tpope/vim-fugitive'
-Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tpope/vim-rails.git'
+Plugin 'Lokaltog/vim-easymotion'
 Plugin 'scrooloose/nerdtree'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'wincent/command-t'
 "Plugin 'ervandew/supertab'
 Plugin 'scrooloose/syntastic'
 Plugin 'altercation/vim-colors-solarized'
@@ -35,8 +37,10 @@ Plugin 'derekwyatt/vim-scala'
 Plugin 'othree/xml.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'mzlogin/vim-markdown-toc'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'artur-shaik/vim-javacomplete2'
+Plugin 'wakatime/vim-wakatime'
 " " The sparkup vim script is in a subdirectory of this repo called vim.
 " " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -49,7 +53,7 @@ Plugin 'ZoomWin'
 Plugin 'DoxygenToolkit.vim'
 Plugin 'DrawIt'
 " " scripts not on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
+"Plugin 'git://git.wincent.com/command-t.git'
 " " git repos on your local machine (i.e. when working on your own plugin)
 "Plugin 'file:///home/gmarik/path/to/plugin'
 " " ...

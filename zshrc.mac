@@ -91,8 +91,9 @@ alias tailf="tail -f"
 alias vi="vim"
 alias ldd="otool -L"
 alias less="less -M"
+alias rm="rm -i"
 
-export HOMEBREW_GITHUB_API_TOKEN=""
+export HOMEBREW_GITHUB_API_TOKEN="7bd064f31a52171f290703d570da2d2c50725fb2"
 
 # coreutils, gnu-sed
 #if brew list | grep coreutils > /dev/null ; then
@@ -126,10 +127,6 @@ export PATH=$PATH:$NGINX_HOME/sbin
 export ES_HOME=/Users/Ray/Applications/elasticsearch
 export PATH=$PATH:$ES_HOME/bin/service
 
-# mysql
-export MYSQL_HOME=/usr/local/mysql
-export PATH=$PATH:$MYSQL_HOME/bin
-
 # maven
 export MVN_HOME=/usr/local/maven
 export PATH=$PATH:$MVN_HOME/bin
@@ -151,8 +148,10 @@ export PATH=$PATH:$ACTIVATOR_HOME
 # jekyll
 export PATH=$PATH:/Library/Ruby/Gems/2.0.0/gems/jekyll-3.0.3/bin
 
-# youdao dict
+# aliases
 alias youdao="lua /opt/scripts/youdao.lua"
+#alias btsync="sudo launchctl load -w /opt/scripts/com.bittorrent.sync.plist"
+alias btsync="nohup /Applications/Resilio\ Sync.app/Contents/MacOS/Resilio\ Sync --config /Users/Ray/.btsync/btsync.json > /dev/null 2>&1 &"
 
 # lua path and cpath
 export LUA_PATH="./?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;/usr/local/lib/lua/5.1/?.lua;/usr/local/lib/lua/5.1/?/init.lua;;"
@@ -198,3 +197,8 @@ function unsetproxy() {
     echo "unset ALL_PROXY"
     echo "$(curl -s ip.cn)"
 }
+
+# for vim8 test
+export PATH=/usr/local/vim8/bin:$PATH
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
