@@ -91,9 +91,12 @@ alias tailf="tail -f"
 alias vi="vim"
 alias ldd="otool -L"
 alias less="less -M"
-alias rm="rm -i"
+alias rm="safe-rm -i"
+alias ping="ping -c 10"
+alias scan="nmap -sS -Pn -A"
+alias sshproxy="ssh -CND 127.0.0.1:1081"
 
-export HOMEBREW_GITHUB_API_TOKEN="7bd064f31a52171f290703d570da2d2c50725fb2"
+export HOMEBREW_GITHUB_API_TOKEN=""
 
 # coreutils, gnu-sed
 #if brew list | grep coreutils > /dev/null ; then
@@ -131,13 +134,17 @@ export PATH=$PATH:$ES_HOME/bin/service
 export MVN_HOME=/usr/local/maven
 export PATH=$PATH:$MVN_HOME/bin
 
+# ant
+export ANT_HOME=/usr/local/ant
+export PATH=$PATH:$ANT_HOME/bin
+
 # hadoop
-export HADOOP_HOME=/Users/Ray/Applications/hadoop-2.7.2
+export HADOOP_HOME=/Users/Ray/Applications/hadoop
 export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
 export PATH=$PATH:$HADOOP_HOME/bin
 
 # spark
-export SPARK_HOME=/Users/Ray/Applications/spark-2.0.0-bin-hadoop2.7
+export SPARK_HOME=/Users/Ray/Applications/spark
 export LD_LIBRARY_PATH=$HADOOP_COMMON_LIB_NATIVE_DIR:$LD_LIBRARY_PATH
 export PATH=$PATH:$SPARK_HOME/bin
 
@@ -147,6 +154,9 @@ export PATH=$PATH:$ACTIVATOR_HOME
 
 # jekyll
 export PATH=$PATH:/Library/Ruby/Gems/2.0.0/gems/jekyll-3.0.3/bin
+
+# jsl
+export PATH=$PATH:/usr/local/jsl
 
 # aliases
 alias youdao="lua /opt/scripts/youdao.lua"
@@ -200,5 +210,8 @@ function unsetproxy() {
 
 # for vim8 test
 export PATH=/usr/local/vim8/bin:$PATH
+# for tmux 2.2
+export EVENT_NOKQUEUE=1
 
+# iterm2 shell integration, must be set at end of this file
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

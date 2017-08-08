@@ -41,6 +41,11 @@ Plugin 'mzlogin/vim-markdown-toc'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'wakatime/vim-wakatime'
+Plugin 'rizzatti/dash.vim'
+Plugin 'ensime/ensime-vim'
+Plugin 'nvie/vim-flake8'
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
 " " The sparkup vim script is in a subdirectory of this repo called vim.
 " " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -52,6 +57,7 @@ Plugin 'winmanager'
 Plugin 'ZoomWin'
 Plugin 'DoxygenToolkit.vim'
 Plugin 'DrawIt'
+Plugin 'Jinja'
 " " scripts not on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
 " " git repos on your local machine (i.e. when working on your own plugin)
@@ -127,9 +133,9 @@ set selection=inclusive    "指定在选择文本时，光标所在位置也属�
 set selectmode=mouse,key        " 在工作区双击鼠标定位）
 set backspace=indent,eol,start      "解决退格键不能用得问题
 " set tab=2 in yaml, scala, ...
-autocmd FileType yaml,scala set sw=2
-autocmd FileType yaml,scala set ts=2
-autocmd FileType yaml,scala set sts=2
+autocmd FileType yaml,scala,html set sw=2
+autocmd FileType yaml,scala,html set ts=2
+autocmd FileType yaml,scala,html set sts=2
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 状态行(命令行)的显示
@@ -153,7 +159,6 @@ syntax enable
 syntax on                    " 语法高亮
 "cd /home/ray/Code             " 默认保存路径,会影响默认工作路径
 autocmd FileType crontab setlocal backupcopy=yes    " solve vi/vim editing crontab in osx problem
-autocmd FileType java setlocal omnifunc=javacomplete#Complete   " vim-javacomplete2
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 查找
@@ -234,6 +239,9 @@ nnoremap <leader>3 :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " format json
 map <F9> <ESC>:%!python3 -m json.tool<CR>
 
+" vim-flake8
+autocmd FileType python map <buffer> <F10> :call Flake8()<CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 插件
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -242,29 +250,36 @@ let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
+
 " taglist
 let g:Tlist_Ctags_Cmd='/usr/local/bin/ctags'
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
+
 " NERDTree
 let g:NERDTree_title="[NERDTree]"
+
 " winManager
 let g:winManagerWindowLayout="NERDTree|TagList"
 let g:winManagerWidth = 30
+
 " YouCompleteMe
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_error_symbol = '>>'
 let g:ycm_warning_symbol = '>*'
+
 " eclim, this setting is set to work with YouCompleteMe
-"let g:EclimCompletionMethod = 'omnifunc'
+let g:EclimCompletionMethod = 'omnifunc'
+
 " supertab
 "let g:SuperTabDefaultCompletionType="context"
-" vim-airline
-let g:airline_theme='badwolf'
+
 " vim-lua, enable omni completion
 let g:lua_complete_omni = 1
 let g:lua_safe_omni_modules = 1
 
+" vim-airline
+let g:airline_theme='badwolf'
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
@@ -286,6 +301,20 @@ let g:airline_symbols.whitespace = 'Ξ'
 let g:DoxygenToolkit_briefTag_pre="@Synopsis "
 let g:DoxygenToolkit_paramTag_pre="@Param "
 let g:DoxygenToolkit_returnTag="@Return "
-"let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
-"let g:DoxygenToolkit_blockFooter="--------------------------------------------------------------------------"
-let g:DoxygenToolkit_authorName="Ray/rayydl@gmail.com"
+let g:DoxygenToolkit_blockHeader="==="
+let g:DoxygenToolkit_blockFooter="==="
+let g:DoxygenToolkit_authorName="Ray/xx@mail.com"
+
+" vim-markdown
+let g:vim_markdown_math = 1
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_json_frontmatter = 1
+
+" vim-markdown-toc
+let g:vmt_cycle_list_item_markers = 1
+
+" vim-javacomplete2
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+" ENSIME
+autocmd BufWritePost *.scala silent :EnTypeCheck
