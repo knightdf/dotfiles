@@ -1,0 +1,36 @@
+*~
+.DS_Store
+.java-version
+*.so
+*.pyc
+*.class
+*.swp
+
+# sbt specific
+.history
+.cache
+.lib/
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+dist/*
+
+# ensime
+.ensime
+.ensime_cache/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Maven
+log/
+target/

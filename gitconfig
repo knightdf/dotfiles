@@ -1,29 +1,42 @@
 [user]
-	name = Ray
-	email = xx@mail.com
+    name = Ray
+    email = rayydl@gmail.com
 [credential]
-	helper = cache --timeout=3600
+    helper = cache --timeout=3600
 [color]
-	branch = auto 
-	diff = auto 
-	status = auto 
-	grep = auto 
-	ui = true
-	pager = true
-	interactive = auto 
-[color "branch"] 
-	current = yellow reverse
-	local = yellow 
-	remote = green 
-[color "diff"] 
-	meta = yellow 
-	frag = magenta 
-	old = red 
-	new = green 
-[color "status"] 
-	added = yellow
-	changed = green
-	untracked = cyan
+    branch = auto
+    diff = auto
+    status = auto
+    grep = auto
+    ui = true
+    pager = true
+    interactive = auto
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow
+    frag = magenta
+    old = red
+    new = green
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
 [core]
-	pager = less
-	
+    pager = less
+    excludesfile = /Users/Ray/.gitignore_global
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[push]
+    default = simple
+[http]
+    proxy = socks5://127.0.0.1:1080
+[commit]
+    template = /Users/Ray/.stCommitMsg
