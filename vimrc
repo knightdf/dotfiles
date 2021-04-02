@@ -14,40 +14,48 @@ Plugin 'VundleVim/Vundle.vim'
 " " The following are examples of different formats supported.
 " " Keep Plugin commands between vundle#begin/end.
 " " scripts on GitHub repos
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+Plugin 'davidhalter/jedi'
+Plugin 'sickill/vim-monokai'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-obsession'
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rails.git'
-Plugin 'Lokaltog/vim-easymotion'
+Plugin 'easymotion/vim-easymotion'
 Plugin 'scrooloose/nerdtree'
 "Plugin 'fholgado/minibufexpl.vim'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'wincent/command-t'
 "Plugin 'ervandew/supertab'
 Plugin 'scrooloose/syntastic'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'sickill/vim-monokai'
-Plugin 'davidhalter/jedi'
 Plugin 'xolox/vim-lua-ftplugin'
 Plugin 'xolox/vim-misc'
-Plugin 'kien/ctrlp.vim'
-Plugin 'elzr/vim-json'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'junegunn/fzf'
+Plugin 'pedrohdz/vim-yaml-folds'    " yaml
+Plugin 'elzr/vim-json'              " json
+Plugin 'Yggdroot/indentLine'        " show indent level
 Plugin 'derekwyatt/vim-scala'
 Plugin 'othree/xml.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'mzlogin/vim-markdown-toc'
 Plugin 'scrooloose/nerdcommenter'
-"Plugin 'artur-shaik/vim-javacomplete2'
-"Plugin 'ensime/ensime-vim'
-Plugin 'wakatime/vim-wakatime'
+Plugin 'editorconfig/editorconfig-vim'  " https://editorconfig.org/
 Plugin 'rizzatti/dash.vim'
-Plugin 'nvie/vim-flake8'
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
-Plugin 'wannesm/wmgraphviz.vim'
-Plugin 'posva/vim-vue'
+Plugin 'wannesm/wmgraphviz.vim'     " Graphviz
+Plugin 'aklt/plantuml-syntax'       " Plantuml
+Plugin 'mattn/emmet-vim'            " HTML & CSS
+Plugin 'pangloss/vim-javascript'    " JavaScript support
+Plugin 'leafgarland/typescript-vim' " TypeScript syntax
+Plugin 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
+Plugin 'posva/vim-vue'              " Vue.js syntax
+Plugin 'nvie/vim-flake8'
+"Plugin 'wakatime/vim-wakatime'
+Plugin 'ryanoasis/vim-devicons'     " https://github.com/ryanoasis/vim-devicons
 " " The sparkup vim script is in a subdirectory of this repo called vim.
 " " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -65,7 +73,6 @@ Plugin 'Jinja'
 "Plugin 'git://git.wincent.com/command-t.git'
 " " git repos on your local machine (i.e. when working on your own plugin)
 "Plugin 'file:///home/gmarik/path/to/plugin'
-Plugin 'file:///usr/local/opt/fzf/plugin'
 " " ...
 
 " All of your Plugins must be added before the following line
@@ -138,9 +145,9 @@ set selection=inclusive    "指定在选择文本时，光标所在位置也属�
 set selectmode=mouse,key        " 在工作区双击鼠标定位）
 set backspace=indent,eol,start      "解决退格键不能用得问题
 " set tab=2 in yaml, scala, ...
-autocmd FileType yaml,scala,html set sw=2
-autocmd FileType yaml,scala,html set ts=2
-autocmd FileType yaml,scala,html set sts=2
+autocmd FileType yaml,scala,html,typescript set sw=2
+autocmd FileType yaml,scala,html,typescript set ts=2
+autocmd FileType yaml,scala,html,typescript set sts=2
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 状态行(命令行)的显示
@@ -233,13 +240,6 @@ map <F5> :call CompileCode()<CR>
 "  F6 运行
 map <F6> :call RunCode()<CR>
 
-" ask for import option
-nmap <F7> <Plug>(JavaComplete-Imports-Add)
-imap <F7> <Plug>(JavaComplete-Imports-Add)
-" add all missing imports
-nmap <F8> <Plug>(JavaComplete-Imports-AddMissing)
-imap <F8> <Plug>(JavaComplete-Imports-AddMissing)
-
 " YCM
 nnoremap <leader>1 :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>2 :YcmCompleter GoToDefinition<CR>
@@ -251,9 +251,107 @@ map <F9> <ESC>:%!python3 -m json.tool<CR>
 " vim-flake8
 autocmd FileType python map <buffer> <F10> :call Flake8()<CR>
 
-" ensime
-"nnoremap <leader>t :EnType<CR>
-"au FileType scala nnoremap <leader>d :EnDeclaration<CR>
+" coc
+" Use tab for trigger completion with characters ahead and navigate.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-@> coc#refresh()
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Resolve workspace folder
+autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'setup.cfg']
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+vmap <leader>f <Plug>(coc-format-selected)
+nmap <leader>f <Plug>(coc-format-selected)
+" Formatting entire document.
+nmap <leader>F :call CocAction('format')<CR>
+" Organize imports of the current buffer
+nmap <leader>O :call CocAction('runCommand', 'editor.action.organizeImport')<CR>
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+
+nmap <leader>e :CocCommand explorer<CR>
+" coc-swagger
+command -nargs=0 Swagger :CocCommand swagger.render
+" coc-prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" coc-snippets
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x <Plug>(coc-convert-snippet)
+" coc end
+
+" FZF
+nmap <leader>z :FZF<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 插件
@@ -277,7 +375,7 @@ let g:winManagerWindowLayout="NERDTree|TagList"
 let g:winManagerWidth = 30
 
 " YouCompleteMe
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
 let g:ycm_error_symbol = '>>'
 let g:ycm_warning_symbol = '>*'
 
@@ -285,7 +383,7 @@ let g:ycm_warning_symbol = '>*'
 "let g:SuperTabDefaultCompletionType="context"
 
 " syntastic
-let g:syntastic_python_checkers = ['flake8', 'pyflakes', 'python']
+let g:syntastic_python_checkers = ['flake8', 'mypy', 'python']
 
 " vim-lua, enable omni completion
 let g:lua_complete_omni = 1
@@ -293,6 +391,7 @@ let g:lua_safe_omni_modules = 1
 
 " vim-airline
 let g:airline_theme='badwolf'
+let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
@@ -343,13 +442,6 @@ let g:vim_markdown_json_frontmatter = 1
 " vim-markdown-toc
 let g:vmt_cycle_list_item_markers = 1
 
-" vim-javacomplete2
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
-" ensime
-"let ensime_server_v2=1
-"autocmd BufWritePost *.scala silent :EnTypeCheck
-
 " gradle
 au BufNewFile,BufRead *.gradle setf groovy
 
@@ -360,3 +452,7 @@ let g:vue_disable_pre_processors=1
 
 " wmgraphviz.vim
 let g:WMGraphviz_output = "png"
+
+" line indent level
+"let g:indentLine_char = '⦙'
+let g:indentLine_char_list = ['❘', '¦', '┆', '┊']

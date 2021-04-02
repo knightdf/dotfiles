@@ -1,0 +1,29 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "json",
+    "markdown",
+    "javascript",
+    "typescript",
+    "html",
+    "python"
+  ],
+  "python.linting.flake8Enabled": true,
+  "python.linting.mypyEnabled": false,
+  "python.formatting.provider": "yapf",
+  "python.formatting.yapfPath": "/usr/local/bin/yapf",
+  "python.sortImports.path": "/usr/local/bin/isort",
+  "pyright.organizeimports.provider": "isort",
+  "explorer.width": 30,
+  "explorer.icon.enableNerdfont": true,
+  "explorer.icon.enableVimDevicons": true,
+  "snippets.textmateSnippetsRoots": [],
+  "languageserver": {
+    "go": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod"],
+      "trace.server": "verbose",
+      "filetypes": ["go"]
+    }
+  }
+}

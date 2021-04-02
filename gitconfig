@@ -40,3 +40,5 @@
     proxy = socks5://127.0.0.1:1080
 [commit]
     template = /Users/Ray/.stCommitMsg
+[init]
+	defaultBranch = master

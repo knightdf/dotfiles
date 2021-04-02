@@ -46,7 +46,7 @@ ZSH_THEME="pygmalion"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git osx mvn zsh-autosuggestions zsh-syntax-highlighting virtualenv)
+plugins=(git osx mvn zsh-autosuggestions zsh-syntax-highlighting ng virtualenv)
 
 # User configuration
 # zsh dumps
@@ -92,16 +92,18 @@ alias less="less -M"
 alias rm="safe-rm -i"
 alias ping="ping -c 10"
 alias scan="nmap -sS -Pn -A"
-alias sshproxy="ssh -CND 127.0.0.1:1081"
+alias sshproxy="ssh -fCND 127.0.0.1:1081"
 
-export HOMEBREW_GITHUB_API_TOKEN="XXX"
+export HOMEBREW_GITHUB_API_TOKEN=""
 
-# coreutils, gnu-sed
+# coreutils, gnu-sed, inetutils
 #if brew list | grep coreutils > /dev/null ; then
-export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
-export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
-export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
-export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
+export PATH="/usr/local/opt/inetutils/libexec/gnubin:$PATH"
+export MANPATH="/usr/local/opt/inetutils/libexec/gnuman:$MANPATH"
 alias ls='ls -F --show-control-chars --color=auto'
 eval `gdircolors -b $HOME/.dir_colors`
 #fi
@@ -111,9 +113,10 @@ LESSOPEN="| /usr/local/bin/src-hilite-lesspipe.sh %s"
 LESS=' -R '
 export LESSOPEN LESS
 
-# plugin settings
-# virtualenv
-export VIRTUAL_ENV_DISABLE_PROMPT=
+
+############################
+########## Export ##########
+############################
 
 # java
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/Current/Contents/Home
@@ -138,17 +141,8 @@ export PATH=$PATH:$SPARK_HOME/bin
 export PATH=$PATH:/usr/local/opt/mysql@5.7/bin
 export DYLD_LIBRARY_PATH=/usr/local/opt/mysql@5.7/lib/:$DYLD_LIBRARY_PATH
 
-# playframework
-export ACTIVATOR_HOME=/Users/Ray/Applications/activator-1.3.7-minimal
-export PATH=$PATH:$ACTIVATOR_HOME
-
 # jekyll
 export PATH=$PATH:/Library/Ruby/Gems/2.0.0/gems/jekyll-3.0.3/bin
-
-# aliases
-alias youdao="lua /opt/scripts/youdao.lua"
-#alias btsync="sudo launchctl load -w /opt/scripts/com.bittorrent.sync.plist"
-alias btsync="nohup /Applications/Resilio\ Sync.app/Contents/MacOS/Resilio\ Sync --config /Users/Ray/.btsync/btsync.json > /dev/null 2>&1 &"
 
 # lua path and cpath
 export LUA_PATH="./?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;/usr/local/lib/lua/5.1/?.lua;/usr/local/lib/lua/5.1/?/init.lua;;"
@@ -156,30 +150,49 @@ export LUA_CPATH="./?.so;/usr/local/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/load
 
 # python virtualenv
 export WORKON_HOME=$HOME/.virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
-
-# aws cli completion
-source /usr/local/share/zsh/site-functions/_aws
-# docker completion
-source /usr/local/share/zsh/site-functions/_docker
-# hexo completion
-#eval "$(hexo --completion=zsh)"
-
-# autojump
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 # jenv
 export JENV_ROOT=/usr/local/var/jenv
-if which jenv > /dev/null; then eval "$(jenv init -)"; fi
+
+# for tmux 2.2
+#export EVENT_NOKQUEUE=1
+
+# openssl
+export DYLD_LIBRARY_PATH=/usr/local/opt/openssl/lib:$DYLD_LIBRARY_PATH
+
+# HomeBrew
+#export HOMEBREW_BOTTLE_DOMAIN='https://mirrors.aliyun.com/homebrew/homebrew-bottles'
+
+# flutter
+export PUB_HOSTED_URL='https://pub.flutter-io.cn'
+export FLUTTER_STORAGE_BASE_URL='https://storage.flutter-io.cn'
+
+# android
+export ANDROID_SDK_ROOT=/usr/local/share/android-sdk
+export ANDROID_HOME=$ANDROID_SDK_ROOT
+export PATH=$PATH:"$ANDROID_SDK_ROOT/platform-tools"
+#alias adb="$ANDROID_SDK_ROOT/platform-tools/adb"
+
+############################
+########## Alias ###########
+############################
+
+alias youdao="lua /opt/scripts/youdao.lua"
+#alias btsync="sudo launchctl load -w /opt/scripts/com.bittorrent.sync.plist"
+alias btsync="nohup /Applications/Resilio\ Sync.app/Contents/MacOS/Resilio\ Sync --config /Users/Ray/.btsync/btsync.json > /dev/null 2>&1 &"
+
+############################
+######### Function #########
+############################
 
 function setproxy() {
     if [ $# -eq 0 ];then
         # default ss proxy
         local proxy='socks5://127.0.0.1:1080'
     else
-        local proxy=`echo $1 | awk 'BEGIN {Proxys["ss"]="socks5://127.0.0.1:1080";Proxys["tor"]="socks5://127.0.0.1:9050";Proxys["torb"]="socks5://127.0.0.1:9150";} {print Proxys[$1]}'`
+        local proxy=`echo $1 | awk 'BEGIN {Proxys["ss"]="socks5://127.0.0.1:1080";Proxys["ssh"]="socks5://127.0.0.1:1081";Proxys["tor"]="socks5://127.0.0.1:9050";Proxys["torb"]="socks5://127.0.0.1:9150";} {print Proxys[$1]}'`
         if [ "$proxy" = "" ];then
-            echo "Usage: setproxy [ss|tor|torb]"
+            echo "Usage: setproxy [ss|ssh|tor|torb]"
             return 1
         fi
     fi
@@ -196,8 +209,24 @@ function unsetproxy() {
     echo "$(curl -s myip.ipip.net)"
 }
 
-# for tmux 2.2
-#export EVENT_NOKQUEUE=1
+############################
+########## Source ##########
+############################
+
+# python virtualenv
+source /usr/local/bin/virtualenvwrapper.sh
+# aws cli completion
+source /usr/local/share/zsh/site-functions/_aws
+# docker completion
+source /usr/local/share/zsh/site-functions/_docker
+# hexo completion
+#eval "$(hexo --completion=zsh)"
+
+# autojump
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
+# jenv
+if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 
 # iterm2 shell integration, must be set at end of this file
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

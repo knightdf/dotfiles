@@ -5,8 +5,15 @@
 *.pyc
 *.class
 *.swp
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-# sbt specific
+### Gradle ###
+.gradle
+!gradle/wrapper/gradle-wrapper.jar
+
+### sbt ###
 .history
 .cache
 .lib/
@@ -17,20 +24,23 @@ project/boot/
 project/plugins/project/
 dist/*
 
-# ensime
+### ensime ###
 .ensime
 .ensime_cache/
 
-# Eclipse
+### Eclipse ###
 .classpath
 .project
 .settings/
 
-# Intellij
+### IntelliJ IDEA ###
 .idea/
 *.iml
 *.iws
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
 
-# Maven
-log/
-target/
+### VS Code ###
+.vscode/
